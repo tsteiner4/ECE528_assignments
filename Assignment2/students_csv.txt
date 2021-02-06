@@ -1,18 +1,54 @@
-Zaki, Ahmed, https://www-personal.umd.umich.edu/~zakahmed/428/meface.jpg
-Bowyer, Michael, https://sites.google.com/a/umich.edu/mbowyer/courseartefacts/BowyerHeadshot_150x150.PNG
+Zaki,Ahmed,https://www-personal.umd.umich.edu/~zakahmed/428/meface.jpg
+Maya,Hamka,https://www-personal.umd.umich.edu/~mihamka/428/me.png
+Aishwarya,Ponkshe,https://www-personal.umd.umich.edu/~aponkshe/528/AP.png
+Michael,Bowyer,https://sites.google.com/a/umich.edu/mbowyer/courseartefacts/BowyerHeadshot_150x150.PNG
 Patrick,Brown,https://www-personal.umd.umich.edu/~brownpm/428/SMALL.PORTRAIT2.png
 Justin,Delisi,https://www-personal.umd.umich.edu/~jdelisi/428/headshot.png
-Zajac, Daniel, https://www-personal.umd.umich.edu/~danzajac/528/dz_150x150.jpg
-Tristan,Steiner,http://www-personal.umd.umich.edu/~stristan/528/Steiner_photo_150x150.jpg
+Zajac,Daniel,https://www-personal.umd.umich.edu/~danzajac/528/dz_150x150.jpg
 Reshma,VK,https://www-personal.umd.umich.edu/~reshmavk/528/reshmavk-150x150.png
 Kenny,Topolovec,https://www-personal.umd.umich.edu/~ktopolov/428/KennyTopolovec_150_150.jpg
-Amar,Patel,https://www-personal.umd.umich.edu/~amarpa/428/small.png
+Amar,Patel,https://www-personal.umd.umich.edu/~amarpa/428/images/small.png
 Joe,Benczarski,https://www-personal.umd.umich.edu/~jbenczar/528/joe_150x150.png
-Graff,Paul,https://www-personal.umd.umich.edu/~psgraff/528/PaulGraffPictureForECE528_2.jpg
-Prachi,Bhopatrao,https://www-personal.umd.umich.edu/~bprachi/528/prachi_img.jpg
-Pratul, Ujjwal, https://www-personal.umd.umich.edu/~pujjwal/528/image.jpg
-Sonal,Bhor, https://www-personal.umd.umich.edu/~sbsonal/528/SonalBhor.png
-Maya,Hamka,https://www-personal.umd.umich.edu/~mihamka/428/me.png
-Aishwarya, Ponkshe, https://www-personal.umd.umich.edu/~aponkshe/528/AP.png
-Aishwarya, Dongari, https://www-personal.umd.umich.edu/~aishredy/428/MyPic.png
-Balaji, Chinnireddy, https://www-personal.umd.umich.edu/~balajic/528/image.png
+Paul,Graff,https://www-personal.umd.umich.edu/~psgraff/528/PaulGraffPictureForECE528_2.jpg
+Prachi,Bhopatrao,https://www-personal.umd.umich.edu/~bprachi/528/prachi_img_new.png
+Pratul,Ujjwal,https://www-personal.umd.umich.edu/~pujjwal/528/image.jpg
+Sonal,Bhor,https://www-personal.umd.umich.edu/~sbsonal/528/SonalBhor.png
+Aishwarya,Dongari,https://www-personal.umd.umich.edu/~aishredy/428/MyPic.png
+Balaji,Chinnireddy,https://www-personal.umd.umich.edu/~balajic/528/image.png
+Alqirsh,Fozey,https://www-personal.umd.umich.edu/~falqirsh/428/fozey.png
+Aidan,Bokhari,https://www-personal.umd.umich.edu/~nabokhar/428/HowDoYouDoFellowKids.png
+Manjunadh,Sivagiri,https://www-personal.umd.umich.edu/~sivagiri/428/Image.jpg
+Tejbir,Bhatti,https://www-personal.umd.umich.edu/~tsbhatti/428/IMG.png
+Kush,Patel,https://www-personal.umd.umich.edu/~kushp/428/kush.png
+Kelsey,Gilkey,https://www-personal.umd.umich.edu/~kgilkey/428/KG428.png
+Bruce,Blum,https://www-personal.umd.umich.edu/~bcblum/ECE428/myImage.png
+Sanjay kumar,Khambam,https://www-personal.umd.umich.edu/~ksanjayk/528/Sanjay.png
+Hadi,Hourani,https://www-personal.umd.umich.edu/~hahouran/428/Hourani.png
+Srija,Virigineni,https://www-personal.umd.umich.edu/~srijav/528/myimage.jpg
+Zaynab,Jamil,https://www-personal.umd.umich.edu/~znjamil/428/images/me.png
+Khalid,Saeed,http://www-personal.umd.umich.edu/~ksaeed/528/images/khalid.jpg
+Brendan,Kacic,https://www-personal.umd.umich.edu/~bkacic/ECE428Headshot.jpg
+Huneau,Jake,https://www-personal.umd.umich.edu/~huneauja/428/JakeHuneau150x150.png
+Anthony,Spoto,https://www-personal.umd.umich.edu/~aspoto/528/as_150.png
+Geetanjali,Arakeri,https://www-personal.umd.umich.edu/~garakeri/528/uofmpic.png
+Srinath,Sahadevan,https://www-personal.umd.umich.edu/~ssrinath/528/images/sri.jpg
+Josh,Knight,https://www-personal.umd.umich.edu/~jgknight/528/jgknight.jpg
+Aditya,Kandikuppa,http://www-personal.umd.umich.edu/~kvenkata/528/kvenkata.png
+Lexi,Adams,https://www-personal.umd.umich.edu/~adamsea/428/images/selfie.jpg
+Justin,Marentette,https://www-personal.umd.umich.edu/~byteme/428/headshot.png
+Brendan,Parker,https://www-personal.umd.umich.edu/~parkersb/528/images/me.jpg
+Bartek,Sobiesiuk,https://www-personal.umd.umich.edu/~bsobiesi/428/bartek.png
+Seema Sharanappa,Kanaje,http://www-personal.umd.umich.edu/~skanaje/528/SeemaSharanappaKanaje.jpg
+Alyssa,Maldonado,http://www-personal.umd.umich.edu/~alyssamn/428/images/picture.jpg
+Kshitija,Pathade,https://www-personal.umd.umich.edu/~kshitija/528/Kshitija.png
+Thomas,Hwang,https://www-personal.umd.umich.edu/~hwangth/428/thomas_pfp_1.png
+Vishal,Kataria,https://www-personal.umd.umich.edu/~katariav/428/vishal_kataria.png
+Shruti,Basutkar,https://www-personal.umd.umich.edu/~bshruti/528/images/Shruti.png
+Russell,Andres,http://www-personal.umd.umich.edu/~rcandres/ECE528/images/lifeinthetimesofcovid.png
+Anjali,Mulye,https://www-personal.umd.umich.edu/~anjalirm/528/images/Anjali_Mulye.png
+Josh,Pereli,http://www-personal.umd.umich.edu/~jpereli/428/images/428A2.png
+David,Wade,https://www-personal.umd.umich.edu/~dwwade/428/image_small.png
+Zahid,Nagi,http://www-personal.umd.umich.edu/~znagi/428/images/Img428.png
+Khalid,Saeed,http://www-personal.umd.umich.edu/~ksaeed/528/images/khalid.jpg
+Mohammed,Jawaid,http://www-personal.umd.umich.edu/~mjawaid/528/mj_mugshot.png
+Todd,McMillan,http://www-personal.umd.umich.edu/~tjmcmill/428/Portrait150x150.jpg

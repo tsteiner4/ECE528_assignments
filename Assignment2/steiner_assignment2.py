@@ -35,7 +35,7 @@ to other comments with their response, so we have to search down an extra level.
 """
 def get_list_from_canvas():
     # you will need to create a txt file with your token for canvas, I will not release my key to the internet.
-    private_token = open('ECE528_assignments/Assignment2/private_canvas_key.txt').readline()
+    private_token = open('Assignment2/private_canvas_key.txt').readline()
     canvas = Canvas("https://canvas.umd.umich.edu/", private_token)
     entries = canvas.get_course(518091).get_discussion_topic(1913607).get_topic_entries()
 
