@@ -7,6 +7,8 @@ import wx
 # import images
 from InfoPopupMenu import InfoPopupMenu
 from EventPanel import EventPanel
+from CalendarPanel import CalendarPanel
+from CalendarListPanel import CalendarListPanel
 from CreateNewEvent import CreateNewEvent
 from ListbookWidget import ListbookWidget, TabPanel
 import utils
@@ -38,33 +40,12 @@ class MainFrame(wx.Frame):
         # create a panel in the frame
         self.panel = wx.Panel(self)
         vbox = wx.BoxSizer(wx.VERTICAL)
-        # self.panel_one = TabPanel(self)
-        # self.panel_two = CreateNewEvent(self)
-        # self.panel_two.Hide()
-        #
-        # vbox = wx.BoxSizer(wx.VERTICAL)
-        # vbox.Add(self.panel_one, 1, wx.EXPAND)
-        # vbox.Add(self.panel_two, 1, wx.EXPAND)
-        #
-        # # vbox.Add(-1, 25)
-        # hbox1 = wx.BoxSizer(wx.HORIZONTAL)
-        # closeButton = wx.Button(self, label='Close', pos=(20, 20))
-        # hbox1.Add(closeButton)
-        # vbox.Add(hbox1)
-        # closeButton.Bind(wx.EVT_BUTTON, self.OnSwitch)
 
-
-        panelOne = TabPanel(self)
-        panelTwo = CreateNewEvent(self)
-        panelThree = TabPanel(self)
-        # self.lb = wx.Listbook(self.panel)
-        self.lb = wx.Listbook(self, wx.ID_ANY, style=
-        # wx.BK_DEFAULT
-                             # wx.BK_TOP
-                             wx.BK_BOTTOM
-                             # wx.BK_LEFT
-                             # wx.BK_RIGHT
-                             )
+        # create the pages for list, calendar and events
+        panelOne = CalendarListPanel(self)
+        panelTwo = CalendarPanel(self)
+        panelThree = EventPanel(self)
+        self.lb = wx.Listbook(self, wx.ID_ANY, style=wx.BK_BOTTOM)
         pages = [(panelOne, "Calendar List"),
                  (panelTwo, "Calendar"),
                  (panelThree, "Events")]
@@ -160,6 +141,7 @@ class MainFrame(wx.Frame):
         old = event.GetOldSelection()
         new = event.GetSelection()
         sel = self.lb.GetSelection()
+        self.SetTitle(self.lb.GetPageText(self.lb.GetSelection()))
         # print('OnPageChanged, old:%d, new:%d, sel:%d\n' % (old, new, sel))
         event.Skip()
 
