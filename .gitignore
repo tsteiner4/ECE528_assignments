@@ -1,5 +1,8 @@
 .idea/
 private_canvas_key.txt
+public_key*
+credentials.json
+token.pickle
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
