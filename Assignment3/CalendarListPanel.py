@@ -20,77 +20,55 @@ class CalendarListPanel(wx.Panel):
         self.Centre()
 
     def InitUI(self):
+        self.sizer_1 = wx.BoxSizer(wx.VERTICAL)
+        self.btns = 1
 
-        sizer = wx.GridBagSizer(5, 5)
+        label_1 = wx.StaticText(self, wx.ID_ANY, "Title")
+        label_1.SetFont(wx.Font(20, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
+        self.sizer_1.Add(label_1, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
 
-        text1 = wx.StaticText(self, label="Java Class")
-        sizer.Add(text1, pos=(0, 0), flag=wx.TOP|wx.LEFT|wx.BOTTOM,
-            border=15)
+        self.button_1 = wx.Button(self, wx.ID_ANY, "button_1")
+        self.sizer_1.Add(self.button_1, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
 
-        # icon = wx.StaticBitmap(panel, bitmap=wx.Bitmap('exec.png'))
-        # sizer.Add(icon, pos=(0, 4), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT,
-        #     border=5)
+        self.sizer_2 = wx.BoxSizer(wx.VERTICAL)
+        self.sizer_1.Add(self.sizer_2, 1, wx.EXPAND, 0)
 
-        line = wx.StaticLine(self)
-        sizer.Add(line, pos=(1, 0), span=(1, 5),
-            flag=wx.EXPAND|wx.BOTTOM, border=10)
+        self.sizer_3 = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizer_2.Add(self.sizer_3, 1, wx.EXPAND, 0)
 
-        text2 = wx.StaticText(self, label="Name")
-        sizer.Add(text2, pos=(2, 0), flag=wx.LEFT, border=10)
+        self.button_3 = wx.Button(self, wx.ID_ANY, "button_3")
+        self.button_3.Bind(wx.EVT_BUTTON, self.add_button)
+        self.sizer_3.Add(self.button_3, 0, wx.EXPAND, 0)
 
-        tc1 = wx.TextCtrl(self)
-        sizer.Add(tc1, pos=(2, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND)
+        # self.button_4 = wx.Button(self, wx.ID_ANY, "button_4")
+        # sizer_3.Add(self.button_4, 0, wx.EXPAND, 0)
 
-        text3 = wx.StaticText(self, label="Package")
-        sizer.Add(text3, pos=(3, 0), flag=wx.LEFT|wx.TOP, border=10)
+        self.button_2 = wx.Button(self, wx.ID_ANY, "button_2")
+        self.sizer_1.Add(self.button_2, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
 
-        tc2 = wx.TextCtrl(self)
-        sizer.Add(tc2, pos=(3, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND,
-            border=5)
+        self.SetSizer(self.sizer_1)
 
-        button1 = wx.Button(self, label="Browse...")
-        sizer.Add(button1, pos=(3, 4), flag=wx.TOP|wx.RIGHT, border=5)
-
-        text4 = wx.StaticText(self, label="Extends")
-        sizer.Add(text4, pos=(4, 0), flag=wx.TOP|wx.LEFT, border=10)
-
-        combo = wx.ComboBox(self)
-        sizer.Add(combo, pos=(4, 1), span=(1, 3),
-            flag=wx.TOP|wx.EXPAND, border=5)
-
-        button2 = wx.Button(self, label="Browse...")
-        sizer.Add(button2, pos=(4, 4), flag=wx.TOP|wx.RIGHT, border=5)
-
-        sb = wx.StaticBox(self, label="Optional Attributes")
-
-        boxsizer = wx.StaticBoxSizer(sb, wx.VERTICAL)
-        boxsizer.Add(wx.CheckBox(self, label="Public"),
-            flag=wx.LEFT|wx.TOP, border=5)
-        boxsizer.Add(wx.CheckBox(self, label="Generate Default Constructor"),
-            flag=wx.LEFT, border=5)
-        boxsizer.Add(wx.CheckBox(self, label="Generate Main Method"),
-            flag=wx.LEFT|wx.BOTTOM, border=5)
-        sizer.Add(boxsizer, pos=(5, 0), span=(1, 5),
-            flag=wx.EXPAND|wx.TOP|wx.LEFT|wx.RIGHT , border=10)
-
-        button3 = wx.Button(self, label='Help')
-        sizer.Add(button3, pos=(7, 0), flag=wx.LEFT, border=10)
-
-        button4 = wx.Button(self, label="Ok")
-        button4.Bind(wx.EVT_BUTTON, self.onOKButton)
-        sizer.Add(button4, pos=(7, 3))
-
-        button5 = wx.Button(self, label="Cancel")
-        sizer.Add(button5, pos=(7, 4), span=(1, 1),
-            flag=wx.BOTTOM|wx.RIGHT, border=10)
-
-        sizer.AddGrowableCol(2)
-
-        self.SetSizer(sizer)
-        sizer.Fit(self)
+        self.Layout()
 
     def onOKButton(self, e):
         event = create_event_from_data(summary="", location="", description="", start=datetime.datetime.utcnow().isoformat(),
                                timeZone="America/Chicago", end=datetime.datetime.utcnow().isoformat(), recurrRule=[],
                                attendees=[], defaultReminder=False, reminderOverrides=[])
         print(event)
+
+    #----------------------------------------------------------------------
+    def add_button(self, event):
+        """"""
+        new_btn = wx.Button(self, label="Remove %s" % self.btns)
+        new_btn.Bind(wx.EVT_BUTTON, self.remove_button)
+        self.btns += 1
+        self.sizer_3.Add(new_btn, 0, wx.CENTER|wx.ALL, 5)
+        self.sizer_3.Layout()
+
+    #----------------------------------------------------------------------
+    def remove_button(self, event):
+        """"""
+        btn = event.GetEventObject()
+        self.sizer_3.Hide(btn)
+        self.sizer_3.Remove(btn)
+        self.sizer_3.Layout()
