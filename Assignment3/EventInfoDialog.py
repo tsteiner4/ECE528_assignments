@@ -6,48 +6,62 @@ class EventInfoDialog(wx.Dialog):
         super(EventInfoDialog, self).__init__(*args, **kw)
 
         self.InitUI()
-        self.SetSize((250, 200))
-        self.SetTitle("Change Color Depth")
+        self.SetSize((400, 400))
 
 
     def InitUI(self):
+        self.SetTitle("Event Info")
 
-        pnl = wx.Panel(self)
-        vbox = wx.BoxSizer(wx.VERTICAL)
+        sizer = wx.GridBagSizer(15, 5)
+        self.panel = wx.Panel(self, wx.ID_ANY)
 
-        sb = wx.StaticBox(pnl, label='Colors')
-        sbs = wx.StaticBoxSizer(sb, orient=wx.VERTICAL)
-        sbs.Add(wx.RadioButton(pnl, label='256 Colors',
-            style=wx.RB_GROUP))
-        sbs.Add(wx.RadioButton(pnl, label='16 Colors'))
-        sbs.Add(wx.RadioButton(pnl, label='2 Colors'))
+        self.text1 = wx.StaticText(self.panel, label="Summary")
+        sizer.Add(self.text1, pos=(0, 0), flag=wx.LEFT | wx.TOP, border=10)
 
-        hbox1 = wx.BoxSizer(wx.HORIZONTAL)
-        hbox1.Add(wx.RadioButton(pnl, label='Custom'))
-        hbox1.Add(wx.TextCtrl(pnl), flag=wx.LEFT, border=5)
-        sbs.Add(hbox1)
+        self.summary_text = wx.TextCtrl(self.panel)
+        sizer.Add(self.summary_text, pos=(0, 1), span=(3, 15), flag=wx.TOP | wx.EXPAND, border=10)
 
-        pnl.SetSizer(sbs)
+        text3 = wx.StaticText(self.panel, label="Start Date")
+        sizer.Add(text3, pos=(3, 0), flag=wx.LEFT | wx.TOP, border=10)
 
-        hbox2 = wx.BoxSizer(wx.HORIZONTAL)
-        okButton = wx.Button(self, label='Ok')
-        closeButton = wx.Button(self, label='Close')
-        hbox2.Add(okButton)
-        hbox2.Add(closeButton, flag=wx.LEFT, border=5)
+        self.start_date = wx.TextCtrl(self.panel)
+        sizer.Add(self.start_date, pos=(3, 1), span=(1, 15), flag=wx.TOP | wx.EXPAND, border=10)
 
-        vbox.Add(pnl, proportion=1,
-            flag=wx.ALL|wx.EXPAND, border=5)
-        vbox.Add(hbox2, flag=wx.ALIGN_CENTER|wx.TOP|wx.BOTTOM, border=10)
+        text5 = wx.StaticText(self.panel, label="Start Time")
+        sizer.Add(text5, pos=(4, 0), flag=wx.LEFT | wx.TOP, border=10)
 
-        self.SetSizer(vbox)
+        self.start_time = wx.TextCtrl(self.panel)
+        sizer.Add(self.start_time, pos=(4, 1), span=(1, 15), flag=wx.TOP | wx.EXPAND, border=10)
 
-        okButton.Bind(wx.EVT_BUTTON, self.OnClose)
-        closeButton.Bind(wx.EVT_BUTTON, self.OnClose)
+        text3 = wx.StaticText(self.panel, label="End Date")
+        sizer.Add(text3, pos=(5, 0), flag=wx.LEFT | wx.TOP, border=10)
 
+        self.end_date = wx.TextCtrl(self.panel)
+        sizer.Add(self.end_date, pos=(5, 1), span=(1, 15), flag=wx.TOP | wx.EXPAND,
+                  border=10)
+        text6 = wx.StaticText(self.panel, label="End Time")
+        sizer.Add(text6, pos=(6, 0), flag=wx.LEFT | wx.TOP, border=10)
+
+        self.end_time = wx.TextCtrl(self.panel)
+        sizer.Add(self.end_time, pos=(6, 1), span=(1, 15), flag=wx.TOP | wx.EXPAND, border=10)
+
+        text2 = wx.StaticText(self.panel, label="Recurring?")
+        sizer.Add(text2, pos=(7, 0), flag=wx.LEFT | wx.TOP, border=10)
+
+        self.recurring = wx.TextCtrl(self.panel)
+        sizer.Add(self.recurring, pos=(7, 1), span=(1, 15), flag=wx.TOP | wx.EXPAND,
+                  border=10)
+
+        text2 = wx.StaticText(self.panel, label="Reminder?")
+        sizer.Add(text2, pos=(8, 0), flag=wx.LEFT | wx.TOP, border=10)
+
+        self.reminder = wx.TextCtrl(self.panel)
+        sizer.Add(self.reminder, pos=(8, 1), span=(1, 15), flag=wx.TOP | wx.EXPAND,
+                  border=10)
+
+        self.panel.SetSizer(sizer)
+        # sizer.Fit(self)
 
     def OnClose(self, e):
 
         self.Destroy()
-
-    def setEvent(self, e):
-        self.SetTitle(e)

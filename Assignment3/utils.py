@@ -11,8 +11,8 @@ from CalendarApp import *
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 
-def create_event_from_data(summary="", location="", description="", start=datetime.datetime.utcnow().isoformat(),
-                           timeZone="America/Chicago", end=datetime.datetime.utcnow().isoformat(), recurrRule=[],
+def create_event_from_data(summary="", location="", description="", start="",
+                           timeZone="", end="", recurrRule=[],
                            attendees=[], defaultReminder=False, reminderOverrides=[]):
     event = {
         'summary': summary,
@@ -38,20 +38,26 @@ def create_event_from_data(summary="", location="", description="", start=dateti
 def get_calendar_events(num_events=10):
     global service
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    print('Getting the upcoming 10 events')
     events_result = service.events().list(calendarId='primary', timeMin=now,
                                         maxResults=num_events, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
 
-    if not events:
-        print('No upcoming events found.')
-    for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
-
     return events
 
+def get_event_info(eventId):
+    global service
+    event_info = service.events().get(calendarId='primary', eventId=eventId).execute()
+
+    return event_info
+
+def add_event(event_data):
+    global service
+    service.events().insert(calendarId='primary', body=event_data).execute()
+
+def delete_event(event_id):
+    global service
+    service.events().delete(calendarId='primary', eventId=event_id)
 
 def auth_setup():
     """Shows basic usage of the Google Calendar API.
@@ -92,3 +98,35 @@ def auth_setup():
     # for event in events:
     #     start = event['start'].get('dateTime', event['start'].get('date'))
     #     print(start, event['summary'])
+
+def APILookup(desc, *args, **kw):
+    py = []
+    http = "Not set"
+    py.append("service = build('calendar', 'v3', credentials=creds)")
+    if (desc == 'Event List'):
+        http = 'GET https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=10&orderBy=startTime&singleEvents=true&timeMin=[now]&key=[YOUR_API_KEY]'
+        py.append("events_result = service.events().list(calendarId='primary', timeMin=[now], maxResults=10, singleEvents=True, orderBy='startTime').execute()")
+        py.append("events = events_result.get('items', [])")
+        return http, py
+
+    elif (desc == 'Event Get'):
+        http = 'GET https://www.googleapis.com/calendar/v3/calendars/primary/events/[eventId]&key=[YOUR_API_KEY]'
+        py.append("event_info = service.events().get(calendarId='primary', eventId=[eventId]).execute()")
+
+    elif (desc == 'Event Delete'):
+        http = 'DELETE https://www.googleapis.com/calendar/v3/calendars/primary/events/[eventId]?&key=[YOUR_API_KEY]'
+        py.append("service.events().delete(calendarId='primary', eventId=event_id)")
+
+    elif (desc == 'Event Insert'):
+        event_data = create_event_from_data()
+        http = f"POST https://www.googleapis.com/calendar/v3/calendars/primary/events?key=[YOUR_API_KEY]\n{event_data}"
+        py.append("service.events().insert(calendarId='primary', body=event_data).execute()")
+
+    elif (desc == 'Event Get'):
+        http = 'GET https://www.googleapis.com/calendar/v3/calendars/primary/events?key=[YOUR_API_KEY]'
+
+    elif (desc == 'Event Get'):
+        http = 'GET https://www.googleapis.com/calendar/v3/calendars/primary/events?key=[YOUR_API_KEY]'
+    else:
+        http = ''
+    return http, py

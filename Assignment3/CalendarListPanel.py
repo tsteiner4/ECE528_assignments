@@ -70,5 +70,5 @@ class CalendarListPanel(wx.Panel):
         """"""
         btn = event.GetEventObject()
         self.sizer_3.Hide(btn)
-        self.sizer_3.Remove(btn)
+        btn.Destroy()
         self.sizer_3.Layout()
