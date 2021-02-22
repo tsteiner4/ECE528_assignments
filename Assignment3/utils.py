@@ -5,27 +5,23 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+from googleapiclient.errors import HttpError
+
 from CalendarApp import *
 
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
+SCOPES = ['https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/calendar.events']
 
 
 def create_event_from_data(summary="", location="", description="", start="",
-                           timeZone="", end="", recurrRule=[],
+                           end="", recurrRule=[],
                            attendees=[], defaultReminder=False, reminderOverrides=[]):
     event = {
         'summary': summary,
         'location': location,
         'description': description,
-        'start': {
-            'dateTime': start,
-            'timeZone': timeZone,
-        },
-        'end': {
-            'dateTime': end,
-            'timeZone': timeZone,
-        },
+        'start': start,
+        'end': end,
         'recurrence': recurrRule,
         'attendees': attendees,
         'reminders': {
@@ -53,11 +49,15 @@ def get_event_info(eventId):
 
 def add_event(event_data):
     global service
-    service.events().insert(calendarId='primary', body=event_data).execute()
+    try:
+        service.events().insert(calendarId='primary', body=event_data).execute()
+        return True, None
+    except HttpError as e:
+        return False, e
 
 def delete_event(event_id):
     global service
-    service.events().delete(calendarId='primary', eventId=event_id)
+    service.events().delete(calendarId='primary', eventId=event_id).execute()
 
 def auth_setup():
     """Shows basic usage of the Google Calendar API.
@@ -115,7 +115,7 @@ def APILookup(desc, *args, **kw):
 
     elif (desc == 'Event Delete'):
         http = 'DELETE https://www.googleapis.com/calendar/v3/calendars/primary/events/[eventId]?&key=[YOUR_API_KEY]'
-        py.append("service.events().delete(calendarId='primary', eventId=event_id)")
+        py.append("service.events().delete(calendarId='primary', eventId=event_id).execute()")
 
     elif (desc == 'Event Insert'):
         event_data = create_event_from_data()

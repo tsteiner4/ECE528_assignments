@@ -39,7 +39,7 @@ class EventPanel(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.OnUpdate, id=updateBtn.GetId())
         self.Bind(wx.EVT_BUTTON, self.OnInfo, id=infoBtn.GetId())
         self.Bind(wx.EVT_BUTTON, self.OnDelete, id=delBtn.GetId())
-        self.Bind(wx.EVT_BUTTON, self.OnClear, id=addBtn.GetId())
+        self.Bind(wx.EVT_BUTTON, self.OnAdd, id=addBtn.GetId())
         self.Bind(wx.EVT_LISTBOX_DCLICK, self.OnInfo)
 
         vbox.Add((-1, 20))
@@ -80,25 +80,26 @@ class EventPanel(wx.Panel):
             warn.Destroy()
         else:
             e = utils.get_event_info(self.event_ids[sel]['id'])
-            renamed = EventInfoDialog(None, title='API Info')
+            renamed = EventInfoDialog(None, title='Event Info')
             renamed.summary_text.SetLabelText(e['summary'])
-            if 'date' in e['start'].keys():
-                start = e['start']['date']
-                stime = "None"
-            else:
+            if 'dateTime' in e['start'].keys():
                 start = e['start']['dateTime']
                 start = datetime.strptime(start, '%Y-%m-%dT%H:%M:%S%z')
                 stime = datetime.strftime(start, '%H:%M:%S')
                 start = datetime.strftime(start, '%Y-%m-%d')
-
-            if 'date' in e['end'].keys():
-                end = e['end']['date']
-                etime = "None"
             else:
+                start = e['start']['date']
+                stime = "None"
+
+            if 'dateTime' in e['end'].keys():
                 end = e['end']['dateTime']
                 end = datetime.strptime(end, '%Y-%m-%dT%H:%M:%S%z')
                 etime = datetime.strftime(end, '%H:%M:%S')
                 end = datetime.strftime(end, '%Y-%m-%d')
+            else:
+                end = e['end']['date']
+                etime = "None"
+
             renamed.start_date.SetLabelText(start)
             renamed.start_time.SetLabelText(stime)
             renamed.end_date.SetLabelText(end)
@@ -112,18 +113,59 @@ class EventPanel(wx.Panel):
                 renamed.reminder.SetLabelText('True')
             else:
                 renamed.reminder.SetLabelText('False')
+
+            if 'location' in e.keys():
+                renamed.location.SetLabelText(e['location'])
+
+            if 'description' in e.keys():
+                renamed.desc.SetLabelText(e['description'])
+
             renamed.ShowModal()
             renamed.Destroy()
 
 
     def OnDelete(self, event):
-
-        sel = self.list.GetSelection()
+        sel = self.list.GetFirstSelected()
         if sel != -1:
-            self.list.Delete(sel)
+            print(self.event_ids[sel]['id'])
+            utils.delete_event(self.event_ids[sel]['id'])
+            self.OnUpdate(None)
 
-    def OnClear(self, event):
-        self.list.ClearAll()
+    def OnAdd(self, event):
+        addDial = EventInfoDialog(None, title='Add Event')
+        if addDial.ShowModal() == wx.ID_OK:
+            summary = addDial.summary_text.GetLineText(0)
+            start_date = addDial.start_date.GetLineText(0)
+            start_time = addDial.start_time.GetLineText(0)
+            if start_time == '':
+                start_datetime = ""
+            else:
+                start_datetime = datetime.strptime(start_date + " " + start_time, '%Y-%m-%d %H:%M:%S')
+            end_date = addDial.end_date.GetLineText(0)
+            end_time = addDial.end_time.GetLineText(0)
+            if end_time == "":
+                end_datetime = ""
+            else:
+                end_datetime = datetime.strptime(end_date + " " + end_time, '%Y-%m-%d %H:%M:%S')
+            reminder = addDial.reminder.GetLineText(0)
+            location = addDial.location.GetLineText(0)
+            desc = addDial.desc.GetLineText(0)
+
+            if start_time == "":
+                created_event = utils.create_event_from_data(summary=summary, location=location, description=desc, start={'date': start_date},
+                                             end={'date': end_date}, defaultReminder=reminder)
+            else:
+                created_event = utils.create_event_from_data(summary=summary, location=location, description=desc,
+                                                             start={'dateTime': start_datetime},
+                                                             end={'dateTime': end_datetime}, defaultReminder=reminder)
+            success, err = utils.add_event(created_event)
+            if not success:
+                warn = wx.MessageDialog(None, message=str(err), caption='Add Event Warning')
+                warn.ShowModal()
+                warn.Destroy()
+            else:
+                addDial.Destroy()
+                self.OnUpdate(None)
 
     def APIInfo(self, event):
         http, py = utils.APILookup(event.GetEventObject().name)
@@ -131,12 +173,3 @@ class EventPanel(wx.Panel):
         dial.setEvent(http, py)
         dial.ShowModal()
         dial.Destroy()
-
-    """
-    To get name from button ->
-    b = wx.Button(self, 10, "Default Button", (20, 20))
-    b.myname = "default button"
-    self.Bind(wx.EVT_BUTTON, self.OnClick, b)
-    def OnClick(self, event):
-        name = event.GetEventObject().myname
-    """
