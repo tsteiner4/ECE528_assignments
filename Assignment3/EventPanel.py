@@ -1,4 +1,3 @@
-import glob
 
 import wx
 import utils
@@ -127,7 +126,6 @@ class EventPanel(wx.Panel):
     def OnDelete(self, event):
         sel = self.list.GetFirstSelected()
         if sel != -1:
-            print(self.event_ids[sel]['id'])
             utils.delete_event(self.event_ids[sel]['id'])
             self.OnUpdate(None)
 
@@ -140,13 +138,13 @@ class EventPanel(wx.Panel):
             if start_time == '':
                 start_datetime = ""
             else:
-                start_datetime = datetime.strptime(start_date + " " + start_time, '%Y-%m-%d %H:%M:%S')
+                start_datetime = start_date + "T" + start_time + "-06:00", '%Y-%m-%d %H:%M:%S%z'
             end_date = addDial.end_date.GetLineText(0)
             end_time = addDial.end_time.GetLineText(0)
             if end_time == "":
                 end_datetime = ""
             else:
-                end_datetime = datetime.strptime(end_date + " " + end_time, '%Y-%m-%d %H:%M:%S')
+                end_datetime = end_date + "T" + end_time + "-06:00", '%Y-%m-%d %H:%M:%S%z'
             reminder = addDial.reminder.GetLineText(0)
             location = addDial.location.GetLineText(0)
             desc = addDial.desc.GetLineText(0)

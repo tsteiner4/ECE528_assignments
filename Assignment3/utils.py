@@ -7,10 +7,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.errors import HttpError
 
-from CalendarApp import *
-
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/calendar.events']
+SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events']
 
 
 def create_event_from_data(summary="", location="", description="", start="",
@@ -31,6 +29,15 @@ def create_event_from_data(summary="", location="", description="", start="",
     }
     return event
 
+def create_calendar(summary="", location="", description="", timeZone=""):
+    cal = {
+        'summary': summary,
+        'location': location,
+        'description': description,
+        'timeZone': timeZone,
+    }
+    return cal
+
 def get_calendar_events(num_events=10):
     global service
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
@@ -41,11 +48,31 @@ def get_calendar_events(num_events=10):
 
     return events
 
+def get_calendar_list(num_results=10):
+    global service
+    cals = service.calendarList().list(maxResults=num_results).execute()
+    cals = cals.get('items', [])
+
+    return cals
+
+def get_calendar_info(calId):
+    global service
+    cal_info = service.calendars().get(calendarId=calId).execute()
+    return cal_info
+
 def get_event_info(eventId):
     global service
     event_info = service.events().get(calendarId='primary', eventId=eventId).execute()
 
     return event_info
+
+def add_calendar(cal_data):
+    global service
+    try:
+        service.calendars().insert(body=cal_data).execute()
+        return True, None
+    except HttpError as e:
+        return False, e
 
 def add_event(event_data):
     global service
@@ -54,6 +81,13 @@ def add_event(event_data):
         return True, None
     except HttpError as e:
         return False, e
+
+def delete_calendar(cal_id):
+    global service
+    service.calendars().delete(calendarId=cal_id).execute()
+
+def get_primary_calendar_id():
+    return get_calendar_info('primary')['id']
 
 def delete_event(event_id):
     global service
@@ -85,20 +119,6 @@ def auth_setup():
 
     service = build('calendar', 'v3', credentials=creds)
 
-    # # Call the Calendar API
-    # now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    # print('Getting the upcoming 10 events')
-    # events_result = service.events().list(calendarId='primary', timeMin=now,
-    #                                     maxResults=10, singleEvents=True,
-    #                                     orderBy='startTime').execute()
-    # events = events_result.get('items', [])
-    #
-    # if not events:
-    #     print('No upcoming events found.')
-    # for event in events:
-    #     start = event['start'].get('dateTime', event['start'].get('date'))
-    #     print(start, event['summary'])
-
 def APILookup(desc, *args, **kw):
     py = []
     http = "Not set"
@@ -122,11 +142,26 @@ def APILookup(desc, *args, **kw):
         http = f"POST https://www.googleapis.com/calendar/v3/calendars/primary/events?key=[YOUR_API_KEY]\n{event_data}"
         py.append("service.events().insert(calendarId='primary', body=event_data).execute()")
 
-    elif (desc == 'Event Get'):
-        http = 'GET https://www.googleapis.com/calendar/v3/calendars/primary/events?key=[YOUR_API_KEY]'
+    elif (desc == 'Calendar List'):
+        http = 'GET https://www.googleapis.com/calendar/v3/users/me/calendarList?key=[YOUR_API_KEY]'
+        py.append('cals = service.calendarList().list(maxResults=num_results).execute()')
+        py.append("cals = cals.get('items', [])")
 
-    elif (desc == 'Event Get'):
-        http = 'GET https://www.googleapis.com/calendar/v3/calendars/primary/events?key=[YOUR_API_KEY]'
+    elif (desc == 'Calendar Get'):
+        http = 'GET https://www.googleapis.com/calendar/v3/calendars/[calendarId]?key=[YOUR_API_KEY]'
+        py.append("cal_info = service.calendars().get(calendarId=cal_id).execute()")
+
+    elif (desc == 'Calendar Insert'):
+        calendar_data = create_calendar()
+        http = f"POST https://www.googleapis.com/calendar/v3/calendars?key=[YOUR_API_KEY]\n{calendar_data}"
+        py.append("service.calendars().insert(body=cal_data).execute()")
+
+    elif (desc == 'Calendar Delete'):
+        http = 'DELETE https://www.googleapis.com/calendar/v3/calendars/[calendarId]?key=[YOUR_API_KEY]'
+        py.append("service.calendars().delete(calendarId=cal_id).execute()")
+
     else:
         http = ''
+        py = ''
+
     return http, py
