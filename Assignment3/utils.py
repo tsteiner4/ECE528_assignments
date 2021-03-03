@@ -7,6 +7,15 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.errors import HttpError
 
+"""
+Reference Google Calendar API for more information on usage and functions.
+
+Rest API: https://developers.google.com/calendar/v3/reference
+
+Python API: https://googleapis.github.io/google-api-python-client/docs/dyn/calendar_v3.html
+
+"""
+
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events']
 
